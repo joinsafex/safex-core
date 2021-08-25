@@ -8,9 +8,10 @@ import {ethers} from "ethers"
 import shamirs from 'shamirs-secret-sharing';
 import { Connection, User, UserBasic, Users, SafeData, Shard, RecoveryMessage, GuardianSecrets, Evidence } from '../types/types';
 import {generateCipherKey, encryptData, decryptData} from "../utils/aes"
-import { TextEncoder } from 'util';
+// import { TextEncoder } from 'util';
 import {ipfsPublish} from "../utils/ipfs"
 require('dotenv').config();
+const util = require('util')
 var environment = require("browser-or-node");
 
 export class utils {
@@ -18,7 +19,8 @@ export class utils {
     private safientAgreementLink: string =
     'https://ipfs.kleros.io/ipfs/QmPMdGmenYuh9kzhU6WkEvRsWpr1B8T7nVWA52u6yoJu13/Safex Agreement.png';
     private safientAgreementURI: string = '/ipfs/QmPMdGmenYuh9kzhU6WkEvRsWpr1B8T7nVWA52u6yoJu13/Safex Agreement.png';
-    private encoder = new TextEncoder();
+    // private encoder = new util.TextEncoder();
+
 
 
     
@@ -166,7 +168,7 @@ export class utils {
                   descriptions: ['The claimer is qualified for inheritence', 'The claimer is not qualified for inheritence'],
                 },
               };
-              const cid: any = await ipfsPublish('metaEvidence.json', this.encoder.encode(JSON.stringify(metaevidenceObj)));
+              const cid: any = await ipfsPublish('metaEvidence.json', JSON.stringify(metaevidenceObj));
               const metaevidenceURI = `/ipfs/${cid[1].hash}${cid[0].path}`;
               return metaevidenceURI
         }catch(err){
@@ -201,7 +203,7 @@ export class utils {
                   name: evidenceName,
                   description: description,
                 };
-             cid = await ipfsPublish('evidence.json', this.encoder.encode(JSON.stringify(evidenceObj)));
+             cid = await ipfsPublish('evidence.json', JSON.stringify(evidenceObj));
              evidenceURI = `/ipfs/${cid[1].hash}${cid[0].path}`;
 
             }
@@ -214,7 +216,7 @@ export class utils {
                     description: description,
                   };
                   //evidenceURI = `ipfs/QmXK5Arf1jWtox5gwVLX2jvoiJvdwiVsqAA2rTu7MUGBDF/signature.jpg`
-                  cid = await ipfsPublish('evidence.json', this.encoder.encode(JSON.stringify(evidenceObj)));
+                  cid = await ipfsPublish('evidence.json', JSON.stringify(evidenceObj));
                   evidenceURI = `/ipfs/${cid[1].hash}${cid[0].path}`;
             }
             }

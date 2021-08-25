@@ -1,8 +1,9 @@
 const fetch = require("node-fetch");
+const encoder = new TextEncoder();
 
 export const ipfsPublish = async (fileName, data) => {
-    const buffer = await Buffer.from(data);
-  
+    const encodedData = encoder.encode(data)
+    const buffer = await Buffer.from(encodedData);
     return new Promise((resolve, reject) => {
       fetch('https://ipfs.kleros.io/add', {
         method: 'POST',
